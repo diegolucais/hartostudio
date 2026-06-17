@@ -1,0 +1,1122 @@
+/* =====================================================
+   1. IMPORTS & VARIABLES
+   ===================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --navbar-height: 90px;
+    --filmstrip-height: 100px;
+    --color-bg: #0a0a0a;
+    --color-text: #f0f0f0;
+    --color-border: rgba(255, 255, 255, 0.2);
+    --color-nav-bg: rgba(0, 0, 0, 0.9);
+    --color-brand: #E56A45;
+    --transition: 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Archivo', sans-serif;
+    color: var(--color-text);
+    background: var(--color-bg);
+    line-height: 1.5;
+    overflow-x: hidden;
+}
+
+/* =====================================================
+   2. PAGE TRANSITIONS (Fade in/out, ignoring Navbar)
+   ===================================================== */
+@keyframes fadeInContent {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* Fades in all main page wrappers smoothly, leaving nav untouched */
+body>header,
+body>main,
+body>footer,
+body>aside,
+body>section,
+body>div.about-hero {
+    animation: fadeInContent 0.5s ease forwards;
+    transition: opacity 0.5s ease;
+}
+
+/* Fades out all main page wrappers when navigating away */
+body.fade-out>header,
+body.fade-out>main,
+body.fade-out>footer,
+body.fade-out>aside,
+body.fade-out>section,
+body.fade-out>div.about-hero {
+    opacity: 0;
+    pointer-events: none;
+    /* Prevents accidental clicks while fading out */
+}
+
+/* =====================================================
+   3. INTRO OVERLAY
+   ===================================================== */
+.intro-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #0a0a0a;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 1s ease, visibility 1s ease;
+}
+
+.intro-overlay.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.intro-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.intro-icon {
+    width: 80px;
+    height: auto;
+}
+
+.intro-text {
+    font-size: 1.5rem;
+    color: #aaaaaa;
+    font-weight: 400;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-top: 1.5rem;
+}
+
+.intro-brand {
+    width: 250px;
+    height: auto;
+    margin-bottom: 1.5rem;
+}
+
+.intro-text-2 {
+    font-size: 2rem;
+    color: #aaaaaa;
+    font-weight: 400;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-top: -2rem;
+    margin-bottom: 2rem;
+}
+
+.enter-btn {
+    font-family: 'Archivo', sans-serif;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #ffffff;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    padding: 1rem 3.5rem;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all var(--transition);
+}
+
+.enter-btn:hover {
+    border-color: var(--color-brand);
+    color: var(--color-brand);
+}
+
+/* =====================================================
+   4. NAVBAR
+   ===================================================== */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: var(--navbar-height);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+    z-index: 1000;
+    background: linear-gradient(to bottom, var(--color-nav-bg) 0%, transparent 100%);
+}
+
+.navbar__brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-icon {
+    height: 35px;
+    width: auto;
+}
+
+.logo-text {
+    height: 35px;
+    width: auto;
+    margin-top: 4px;
+}
+
+.navbar__links {
+    display: flex;
+    gap: 2rem;
+}
+
+.nav-btn {
+    text-decoration: none;
+    color: var(--color-text);
+    font-weight: 500;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 0.6rem 2.5rem;
+    border: 1px solid var(--color-border);
+    border-radius: 50px;
+    background: transparent;
+    transition: all var(--transition);
+}
+
+.nav-btn:hover {
+    color: var(--color-brand);
+    border-color: var(--color-brand);
+}
+
+.navbar__toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 20px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 1100;
+}
+
+.navbar__toggle span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: var(--color-text);
+    transition: all var(--transition);
+}
+
+/* =====================================================
+   5. HOME PAGE (Gallery & Filmstrip)
+   ===================================================== */
+.gallery {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+}
+
+.gallery::-webkit-scrollbar {
+    display: none;
+}
+
+.gallery__item {
+    flex: 0 0 100vw;
+    height: 100vh;
+    scroll-snap-align: center;
+    position: relative;
+}
+
+.gallery__link {
+    display: flex;
+    align-items: flex-end;
+    width: 100%;
+    height: 100%;
+    padding: 5rem 3rem calc(var(--filmstrip-height) + 2rem);
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.gallery__video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -2;
+}
+
+.gallery__item::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 60%;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.95) 0%, transparent 100%);
+    z-index: -1;
+    pointer-events: none;
+}
+
+.gallery__content h2 {
+    font-size: 2vw;
+    font-weight: 700;
+    letter-spacing: -2px;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+    transition: color var(--transition);
+    filter: drop-shadow(3px 3px 3px black);
+}
+
+.gallery__link:hover .gallery__content h2 {
+    color: var(--color-brand);
+}
+
+.gallery__content p {
+    font-size: 1rem;
+    font-family: 'Space Mono', monospace;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    opacity: 0.8;
+}
+
+.filmstrip {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: var(--filmstrip-height);
+    display: flex;
+    background: #000;
+    z-index: 1000;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.filmstrip::-webkit-scrollbar {
+    display: none;
+}
+
+.filmstrip::before,
+.filmstrip::after {
+    content: '';
+    margin: auto;
+}
+
+.filmstrip__item {
+    flex: 0 0 auto;
+    width: 180px;
+    height: 100%;
+    cursor: pointer;
+    overflow: hidden;
+    position: relative;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.filmstrip__item video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.5;
+    transition: opacity var(--transition), transform var(--transition);
+    pointer-events: none;
+}
+
+.filmstrip__item.active video {
+    opacity: 1;
+}
+
+.filmstrip__item.active::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: var(--color-brand);
+}
+
+.filmstrip__item:hover video {
+    opacity: 1;
+    transform: scale(1.05);
+}
+
+/* =====================================================
+   Page Headers (Our Work, About Us, Contact)
+   ===================================================== */
+.page-header {
+    padding: 10rem 3rem 3rem;
+    background: var(--color-bg);
+}
+
+.page-header h1 {
+    font-size: 5vw;
+    font-weight: 800;
+    text-transform: uppercase;
+    line-height: 0;
+    letter-spacing: -4px;
+    margin: 0;
+}
+
+/* =====================================================
+   6. OUR WORK
+   ===================================================== */
+.work-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-top: 1px solid var(--color-border);
+}
+
+.work-item {
+    border-bottom: 1px solid var(--color-border);
+    border-right: 1px solid var(--color-border);
+    text-decoration: none;
+    color: var(--color-text);
+    display: block;
+}
+
+.work-item:nth-child(even) {
+    border-right: none;
+}
+
+.work-item__image {
+    width: 100%;
+    aspect-ratio: 16/9;
+    overflow: hidden;
+    background: #000;
+}
+
+.work-item__image img,
+.work-item__image video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+.work-item:hover .work-item__image img,
+.work-item:hover .work-item__image video {
+    transform: scale(1.04);
+}
+
+.work-item__meta {
+    display: flex;
+    justify-content: space-between;
+    padding: 1.5rem;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    border-top: 1px solid var(--color-border);
+}
+
+.work-item__meta span:last-child {
+    opacity: 0.6;
+}
+
+.work-item--center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: default;
+    /* Removes the pointer cursor since it's not a link */
+}
+
+.work-item--center img {
+    width: 30%;
+    height: auto;
+}
+
+.brands-section {
+    padding: 4rem 3rem;
+    background: var(--color-bg);
+    border-top: 1px solid var(--color-border);
+    text-align: center;
+}
+
+.brands-title {
+    font-size: 2rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 3.5rem;
+    color: var(--color-text);
+}
+
+.brands-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 4.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.brand-logo {
+    height: 50px;
+    width: auto;
+    object-fit: contain;
+    opacity: 0.7;
+    transition: opacity var(--transition), transform var(--transition);
+}
+
+.brand-logo:hover {
+    opacity: 1;
+    transform: scale(1.05);
+}
+
+/* =====================================================
+   7. ABOUT US
+   ===================================================== */
+.about-hero {
+    width: 100vw;
+    height: 70vh;
+    margin-bottom: 4rem;
+    overflow: hidden;
+}
+
+.about-hero img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.about-section {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 4rem;
+    padding: 0 3rem 6rem;
+}
+
+.about-section h2 {
+    font-family: 'Space Mono', monospace;
+    font-size: 1rem;
+    text-transform: uppercase;
+    border-top: 2px solid var(--color-border);
+    padding-top: 1rem;
+}
+
+.about-section p {
+    font-size: 2rem;
+    font-weight: 400;
+    line-height: 1.3;
+    letter-spacing: -1px;
+}
+
+.services-list {
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    font-size: 1.25rem;
+    font-weight: 500;
+}
+
+.services-list li {
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--color-border);
+}
+
+/* =====================================================
+   11. CONTACT FORM
+   ===================================================== */
+.contact-page-wrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.contact-section {
+    padding: 0 3rem 6rem;
+    background: var(--color-bg);
+}
+
+.contact-container {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 4rem;
+    border-top: 2px solid var(--color-border);
+    padding-top: 3rem;
+}
+
+.contact-info h3 {
+    font-family: 'Space Mono', monospace;
+    font-size: 1rem;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    color: var(--color-brand);
+}
+
+.contact-info p {
+    font-size: 1.5rem;
+    font-weight: 300;
+    line-height: 1.4;
+    letter-spacing: -0.5px;
+    opacity: 0.9;
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.form-group label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    opacity: 0.7;
+    letter-spacing: 1px;
+}
+
+.contact-form input,
+.contact-form textarea {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--color-border);
+    color: var(--color-text);
+    font-family: 'Archivo', sans-serif;
+    font-size: 1.25rem;
+    padding: 0.5rem 0;
+    transition: border-color var(--transition);
+    resize: vertical;
+    /* Allows users to resize textarea vertically but not horizontally */
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+    outline: none;
+    border-bottom-color: var(--color-brand);
+}
+
+.contact-form input::placeholder,
+.contact-form textarea::placeholder {
+    color: rgba(255, 255, 255, 0.2);
+    font-size: 1rem;
+}
+
+.submit-btn {
+    align-self: flex-start;
+    font-family: 'Archivo', sans-serif;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--color-text);
+    background: transparent;
+    border: 1px solid var(--color-border);
+    padding: 1rem 3.5rem;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all var(--transition);
+    margin-top: 1rem;
+}
+
+.submit-btn:hover {
+    border-color: var(--color-brand);
+    color: var(--color-brand);
+}
+
+/* =====================================================
+   8. FOOTER
+   ===================================================== */
+.site-footer {
+    background: var(--color-bg);
+    color: var(--color-text);
+    padding: 5rem 3rem 2rem;
+    font-family: 'Space Mono', monospace;
+    border-top: 1px solid var(--color-border);
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 3rem;
+    margin-bottom: 6rem;
+}
+
+.footer-col h4 {
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: capitalize;
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: 0.8rem;
+    margin-bottom: 1.2rem;
+}
+
+.footer-col p,
+.footer-col a {
+    font-size: 0.85rem;
+    color: var(--color-text);
+    opacity: 0.7;
+    line-height: 1.6;
+    text-decoration: none;
+    transition: color var(--transition);
+}
+
+.footer-col a:hover {
+    color: var(--color-brand);
+    opacity: 1;
+}
+
+.footer-links {
+    list-style: none;
+}
+
+.footer-links li {
+    margin-bottom: 0.5rem;
+}
+
+.mt-2 {
+    margin-top: 3rem;
+}
+
+.footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.footer-logo .logo-icon {
+    height: 100px;
+    width: auto;
+}
+
+.footer-logo .logo-text {
+    height: 50px;
+    width: auto;
+    margin-top: 5px;
+}
+
+.footer-copyright {
+    font-size: 1.5rem;
+    font-weight: 400;
+}
+
+/* =====================================================
+   MODAL (Privacy & Terms)
+   ===================================================== */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(5px);
+    z-index: 10000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--transition), visibility var(--transition);
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    width: 90%;
+    max-width: 800px;
+    max-height: 80vh;
+    padding: 4rem 3rem;
+    position: relative;
+    overflow-y: auto;
+    transform: translateY(30px);
+    transition: transform var(--transition);
+}
+
+.modal-overlay.active .modal-content {
+    transform: translateY(0);
+}
+
+.modal-content h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    letter-spacing: -1px;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: 1rem;
+}
+
+.modal-close {
+    position: absolute;
+    top: 1.5rem;
+    right: 2rem;
+    background: transparent;
+    border: none;
+    color: var(--color-text);
+    font-size: 2.5rem;
+    cursor: pointer;
+    line-height: 1;
+    transition: color var(--transition);
+}
+
+.modal-close:hover {
+    color: var(--color-brand);
+}
+
+.modal-body {
+    font-size: 1rem;
+    line-height: 1.6;
+    opacity: 0.8;
+}
+
+.modal-body h3 {
+    color: var(--color-brand);
+    margin: 2rem 0 0.5rem;
+    font-family: 'Space Mono', monospace;
+    text-transform: uppercase;
+    font-size: 1rem;
+    letter-spacing: 1px;
+}
+
+/* Footer Legal Link Styling */
+.footer-legal a {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--color-text);
+    opacity: 0.5;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: all var(--transition);
+}
+
+.footer-legal a:hover {
+    opacity: 1;
+    color: var(--color-brand);
+}
+
+/* =====================================================
+   9. PROJECT PAGES (Individual Video/Gallery)
+   ===================================================== */
+.project-hero {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.project-hero__video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.project-header {
+    text-align: center;
+    padding: 6rem 2rem;
+    background: var(--color-bg);
+}
+
+.project-header h1 {
+    font-size: 4rem;
+    font-weight: 700;
+    letter-spacing: -2px;
+    margin-bottom: 0.5rem;
+}
+
+.project-header p {
+    font-family: 'Space Mono', monospace;
+    font-size: 1rem;
+    opacity: 0.7;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/* --- Project Description Styling --- */
+.project-meta {
+    margin-bottom: 4rem;
+    /* Adds breathing room between the title/meta and the description */
+}
+
+.project-description {
+    max-width: 1000px;
+    margin: 0 auto;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.project-description h3 {
+    font-size: 2rem;
+    font-weight: 400;
+    line-height: 1.3;
+    letter-spacing: -1px;
+}
+
+.project-header .project-description p {
+    font-family: 'Archivo', sans-serif;
+    font-size: 1.15rem;
+    font-weight: 300;
+    text-transform: none;
+    letter-spacing: normal;
+    opacity: 0.85;
+    line-height: 1.6;
+}
+
+.project-gallery {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    background: var(--color-bg);
+}
+
+.gallery-row {
+    display: flex;
+    width: 100%;
+}
+
+.gallery-row img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    display: block;
+}
+
+.gallery-row--full img {
+    width: 100%;
+}
+
+.gallery-row--half img {
+    width: 50%;
+}
+
+.gallery-row--asym img:first-child {
+    width: 60%;
+}
+
+.gallery-row--asym img:last-child {
+    width: 40%;
+}
+
+/* =====================================================
+   10. RESPONSIVENESS
+   ===================================================== */
+@media (max-width: 1024px) {
+    .contact-container {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+
+    .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .about-section {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .about-section p {
+        font-size: 1.5rem;
+    }
+
+    .brands-container {
+        gap: 3rem;
+    }
+
+    .brand-logo {
+        height: 35px;
+    }
+}
+
+@media (max-width: 900px) {
+    .navbar {
+        justify-content: space-between;
+    }
+
+    .logo-text {
+        display: none;
+    }
+
+    .navbar__links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 100vw;
+        height: 100vh;
+        background: var(--color-bg);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        transition: right var(--transition);
+    }
+
+    .navbar__links.active {
+        right: 0;
+    }
+
+    .navbar__toggle {
+        display: flex;
+    }
+
+    .navbar__toggle.open span:nth-child(1) {
+        transform: rotate(45deg);
+    }
+
+    .navbar__toggle.open span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .navbar__toggle.open span:nth-child(3) {
+        transform: rotate(-45deg);
+    }
+
+    .nav-btn {
+        border: none;
+        font-size: 1.5rem;
+    }
+
+    .work-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .work-item {
+        border-right: none;
+    }
+
+    .page-header h1 {
+        font-size: 10vw;
+    }
+}
+
+@media (max-width: 768px) {
+
+    /* Improved mobile padding for better readability */
+    .page-header {
+        padding: 8rem 2rem 2rem;
+    }
+
+    .about-section,
+    .contact-section {
+        padding: 0 2rem 4rem;
+    }
+
+    .site-footer {
+        padding: 4rem 2rem 2rem;
+    }
+
+    .project-header {
+        padding: 5rem 1.5rem;
+    }
+
+    .project-description h3 {
+        font-size: 1.5rem;
+    }
+
+    .project-header .project-description p {
+        font-size: 1rem;
+    }
+
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+        margin-bottom: 4rem;
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.5rem;
+    }
+
+    .gallery__content h2 {
+        font-size: 2.5rem;
+    }
+
+    .project-header h1 {
+        font-size: 2.5rem;
+    }
+
+    .gallery-row--half,
+    .gallery-row--asym {
+        flex-direction: column;
+    }
+
+    .gallery-row--half img,
+    .gallery-row--asym img:first-child,
+    .gallery-row--asym img:last-child {
+        width: 100%;
+    }
+
+    .services-list {
+        grid-template-columns: 1fr;
+    }
+
+    /* Brands section mobile adaptations */
+    .brands-section {
+        padding: 4rem 2rem;
+    }
+
+    .brands-container {
+        gap: 2rem;
+    }
+
+    .brand-logo {
+        height: 30px;
+        max-width: 40%;
+        /* Prevents logos from overflowing on small screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .page-header h1 {
+        font-size: 12vw;
+    }
+
+    .footer-copyright {
+        font-size: 1rem;
+        /* Scaled down the copyright text for phones */
+    }
+
+    .brands-container {
+        gap: 1.5rem;
+    }
+
+    .brand-logo {
+        height: 25px;
+        max-width: 45%;
+    }
+}

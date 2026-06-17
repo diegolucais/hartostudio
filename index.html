@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Harto Studio</title>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<body>
+    <!-- Intro Overlay -->
+    <div class="intro-overlay" id="introOverlay">
+        <div class="intro-content">
+            <img src="./assets/images/harto-logo-icon.png" alt="Harto Icon" class="intro-icon">
+            <p class="intro-text">Welcome to</p>
+            <img src="./assets/images/harto-logo.png" alt="Harto Studio" class="intro-brand">
+            <p class="intro-text-2">Studio</p>
+            <button class="enter-btn" id="enterBtn">Enter Portfolio</button>
+        </div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar" id="navbar">
+        <a href="index.html" class="navbar__brand">
+            <img src="./assets/images/harto-logo-icon.png" alt="Harto Icon" class="logo-icon">
+            <img src="./assets/images/harto-logo.png" alt="Harto Studio" class="logo-text">
+        </a>
+        <div class="navbar__links">
+            <a href="our-work.html" class="nav-btn">Our Work</a>
+            <a href="about-us.html" class="nav-btn">About Us</a>
+            <a href="contact.html" class="nav-btn">Contact</a>
+        </div>
+        <button class="navbar__toggle" id="navbarToggle" aria-label="Toggle menu">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
+
+    <!-- Main Gallery -->
+    <main class="gallery" id="mainGallery">
+        <section class="gallery__item" id="vid1">
+            <a href="./projects/rundubss-anniversary.html" class="gallery__link">
+                <video src="./assets/videos/rundubss-anniversary.mp4" loop playsinline class="gallery__video"></video>
+                <div class="gallery__content">
+                    <h2>Run Dubss - 1<sup>st</sup> Anniversary</h2>
+                    <p>Dublin • 2026</p>
+                </div>
+            </a>
+        </section>
+
+        <section class="gallery__item" id="vid2">
+            <a href="./projects/bon-appetit.html" class="gallery__link">
+                <video src="./assets/videos/bon-appetit.mp4" loop playsinline class="gallery__video"></video>
+                <div class="gallery__content">
+                    <h2>Bon Appetit</h2>
+                    <p>Madrid • 2025</p>
+                </div>
+            </a>
+        </section>
+    
+        <section class="gallery__item" id="vid3">
+            <a href="./projects/lactico-1.html" class="gallery__link">
+                <video src="./assets/videos/lactico-1.mp4" loop playsinline class="gallery__video"></video>
+                <div class="gallery__content">
+                    <h2>Láctico</h2>
+                    <p>Dublin • 2026</p>
+                </div>
+            </a>
+        </section>
+    
+        <section class="gallery__item" id="vid4">
+            <a href="./projects/rundubss-carrera.html" class="gallery__link">
+                <video src="./assets/videos/rundubss-carrera.mp4" loop playsinline class="gallery__video"></video>
+                <div class="gallery__content">
+                    <h2>Run Dubss - Half Marathon &amp; 10k</h2>
+                    <p>Dublin • 2026</p>
+                </div>
+            </a>
+        </section>
+    
+        <section class="gallery__item" id="vid5">
+            <a href="./projects/gloria-osteria.html" class="gallery__link">
+                <video src="./assets/videos/gloria-osteria.mp4" loop playsinline class="gallery__video"></video>
+                <div class="gallery__content">
+                    <h2>Gloria Osteria</h2>
+                    <p>Dublin • 2025</p>
+                </div>
+            </a>
+        </section>
+    
+        <section class="gallery__item" id="vid6">
+            <a href="./projects/lactico-2.html" class="gallery__link">
+                <video src="./assets/videos/lactico-2.mp4" loop playsinline class="gallery__video"></video>
+                <div class="gallery__content">
+                    <h2>Láctico</h2>
+                    <p>Dublin • 2026</p>
+                </div>
+            </a>
+        </section>
+
+         <section class="gallery__item" id="vid7">
+            <a href="./projects/hustle-heart.html" class="gallery__link">
+                <video src="./assets/videos/hustle-heart.mp4" loop playsinline class="gallery__video"></video>
+                <div class="gallery__content">
+                    <h2>Hustle Heart</h2>
+                    <p>Dublin • 2026</p>
+                </div>
+            </a>
+        </section>
+
+        <section class="gallery__item" id="vid8">
+            <a href="./projects/redbull-boss-recap.html" class="gallery__link">
+                <video src="./assets/videos/redbull-boss-recap.mp4" loop playsinline class="gallery__video"></video>
+                <div class="gallery__content">
+                    <h2>Redbull Boss - Tour de France Training Day</h2>
+                    <p>France • 2025</p>
+                </div>
+            </a>
+        </section>
+    </main>
+    
+    <!-- Bottom Filmstrip -->
+    <aside class="filmstrip">
+        <a href="#vid1" data-target="vid1" class="filmstrip__item active">
+            <video src="./assets/videos/rundubss-anniversary.mp4" autoplay muted loop playsinline></video>
+        </a>
+         <a href="#vid2" data-target="vid2" class="filmstrip__item">
+            <video src="./assets/videos/bon-appetit.mp4" autoplay muted loop playsinline></video>
+        </a>
+        <a href="#vid3" data-target="vid3" class="filmstrip__item">
+            <video src="./assets/videos/lactico-1.mp4" autoplay muted loop playsinline></video>
+        </a>
+        <a href="#vid4" data-target="vid4" class="filmstrip__item">
+            <video src="./assets/videos/rundubss-carrera.mp4" autoplay muted loop playsinline></video>
+        </a>
+        <a href="#vid5" data-target="vid5" class="filmstrip__item">
+            <video src="./assets/videos/gloria-osteria.mp4" autoplay muted loop playsinline></video>
+        </a>
+        <a href="#vid6" data-target="vid6" class="filmstrip__item">
+            <video src="./assets/videos/lactico-2.mp4" autoplay muted loop playsinline></video>
+        </a>
+        <a href="#vid7" data-target="vid7" class="filmstrip__item">
+            <video src="./assets/videos/hustle-heart.mp4" autoplay muted loop playsinline></video>
+        </a>
+        <a href="#vid8" data-target="vid8" class="filmstrip__item">
+            <video src="./assets/videos/redbull-boss-recap.mp4" autoplay muted loop playsinline></video>
+        </a>
+    </aside>
+
+    <!-- JavaScript -->
+    <script src="./js/script.js"></script>
+</body>
+
+</html>
