@@ -67,7 +67,6 @@ body.fade-out>section,
 body.fade-out>div.about-hero {
     opacity: 0;
     pointer-events: none;
-    /* Prevents accidental clicks while fading out */
 }
 
 /* =====================================================
@@ -78,7 +77,7 @@ body.fade-out>div.about-hero {
     top: 0;
     left: 0;
     width: 100vw;
-    height: 100vh;
+    height: 100dvh;
     background: #0a0a0a;
     z-index: 9999;
     display: flex;
@@ -161,7 +160,7 @@ body.fade-out>div.about-hero {
     align-items: center;
     justify-content: space-between;
     padding: 0 2rem;
-    z-index: 1000;
+    z-index: 1005;
     background: linear-gradient(to bottom, var(--color-nav-bg) 0%, transparent 100%);
 }
 
@@ -169,6 +168,8 @@ body.fade-out>div.about-hero {
     display: flex;
     align-items: center;
     gap: 12px;
+    position: relative;
+    z-index: 1010;
 }
 
 .logo-icon {
@@ -215,7 +216,7 @@ body.fade-out>div.about-hero {
     background: transparent;
     border: none;
     cursor: pointer;
-    z-index: 1100;
+    z-index: 1010;
 }
 
 .navbar__toggle span {
@@ -232,7 +233,7 @@ body.fade-out>div.about-hero {
 .gallery {
     display: flex;
     width: 100vw;
-    height: 100vh;
+    height: 100dvh;
     overflow-x: auto;
     overflow-y: hidden;
     scroll-snap-type: x mandatory;
@@ -245,7 +246,7 @@ body.fade-out>div.about-hero {
 
 .gallery__item {
     flex: 0 0 100vw;
-    height: 100vh;
+    height: 100dvh;
     scroll-snap-align: center;
     position: relative;
 }
@@ -366,7 +367,7 @@ body.fade-out>div.about-hero {
 }
 
 /* =====================================================
-   Page Headers (Our Work, About Us, Contact)
+   Page Headers
    ===================================================== */
 .page-header {
     padding: 10rem 3rem 3rem;
@@ -442,7 +443,6 @@ body.fade-out>div.about-hero {
     justify-content: center;
     align-items: center;
     cursor: default;
-    /* Removes the pointer cursor since it's not a link */
 }
 
 .work-item--center img {
@@ -541,7 +541,7 @@ body.fade-out>div.about-hero {
 }
 
 /* =====================================================
-   11. CONTACT FORM
+   8. CONTACT
    ===================================================== */
 .contact-page-wrapper {
     min-height: 100vh;
@@ -610,7 +610,6 @@ body.fade-out>div.about-hero {
     padding: 0.5rem 0;
     transition: border-color var(--transition);
     resize: vertical;
-    /* Allows users to resize textarea vertically but not horizontally */
 }
 
 .contact-form input:focus,
@@ -647,7 +646,7 @@ body.fade-out>div.about-hero {
 }
 
 /* =====================================================
-   8. FOOTER
+   9. FOOTER
    ===================================================== */
 .site-footer {
     background: var(--color-bg);
@@ -729,14 +728,14 @@ body.fade-out>div.about-hero {
 }
 
 /* =====================================================
-   MODAL (Privacy & Terms)
+   10. MODAL (Privacy & Terms)
    ===================================================== */
 .modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
-    height: 100vh;
+    height: 100dvh;
     background: rgba(0, 0, 0, 0.85);
     backdrop-filter: blur(5px);
     z-index: 10000;
@@ -811,7 +810,6 @@ body.fade-out>div.about-hero {
     letter-spacing: 1px;
 }
 
-/* Footer Legal Link Styling */
 .footer-legal a {
     font-family: 'Space Mono', monospace;
     font-size: 0.85rem;
@@ -828,12 +826,12 @@ body.fade-out>div.about-hero {
 }
 
 /* =====================================================
-   9. PROJECT PAGES (Individual Video/Gallery)
+   11. PROJECT PAGES (Individual Video/Gallery)
    ===================================================== */
 .project-hero {
     position: relative;
     width: 100vw;
-    height: 100vh;
+    height: 100dvh;
     overflow: hidden;
 }
 
@@ -864,10 +862,8 @@ body.fade-out>div.about-hero {
     letter-spacing: 2px;
 }
 
-/* --- Project Description Styling --- */
 .project-meta {
     margin-bottom: 4rem;
-    /* Adds breathing room between the title/meta and the description */
 }
 
 .project-description {
@@ -932,7 +928,7 @@ body.fade-out>div.about-hero {
 }
 
 /* =====================================================
-   10. RESPONSIVENESS
+   12. RESPONSIVENESS
    ===================================================== */
 @media (max-width: 1024px) {
     .contact-container {
@@ -976,11 +972,13 @@ body.fade-out>div.about-hero {
         top: 0;
         right: -100%;
         width: 100vw;
-        height: 100vh;
+        height: 100dvh;
         background: var(--color-bg);
         flex-direction: column;
-        justify-content: center;
+        justify-content: flex-start;
+        padding-top: 25dvh;
         align-items: center;
+        gap: 2.5rem;
         transition: right var(--transition);
     }
 
@@ -990,10 +988,12 @@ body.fade-out>div.about-hero {
 
     .navbar__toggle {
         display: flex;
+        position: relative;
+        z-index: 1010;
     }
 
     .navbar__toggle.open span:nth-child(1) {
-        transform: rotate(45deg);
+        transform: rotate(45deg) translate(5px, 5px);
     }
 
     .navbar__toggle.open span:nth-child(2) {
@@ -1001,7 +1001,7 @@ body.fade-out>div.about-hero {
     }
 
     .navbar__toggle.open span:nth-child(3) {
-        transform: rotate(-45deg);
+        transform: rotate(-45deg) translate(5px, -5px);
     }
 
     .nav-btn {
@@ -1023,8 +1023,26 @@ body.fade-out>div.about-hero {
 }
 
 @media (max-width: 768px) {
+    .intro-icon {
+        width: 60px;
+    }
 
-    /* Improved mobile padding for better readability */
+    .intro-text {
+        font-size: 1.2rem;
+        margin-top: 1rem;
+    }
+
+    .intro-brand {
+        width: 180px;
+        margin-bottom: 1rem;
+    }
+
+    .intro-text-2 {
+        font-size: 1.5rem;
+        margin-top: -1.5rem;
+        margin-bottom: 1.5rem;
+    }
+
     .page-header {
         padding: 8rem 2rem 2rem;
     }
@@ -1085,7 +1103,6 @@ body.fade-out>div.about-hero {
         grid-template-columns: 1fr;
     }
 
-    /* Brands section mobile adaptations */
     .brands-section {
         padding: 4rem 2rem;
     }
@@ -1097,7 +1114,6 @@ body.fade-out>div.about-hero {
     .brand-logo {
         height: 30px;
         max-width: 40%;
-        /* Prevents logos from overflowing on small screens */
     }
 }
 
@@ -1108,7 +1124,6 @@ body.fade-out>div.about-hero {
 
     .footer-copyright {
         font-size: 1rem;
-        /* Scaled down the copyright text for phones */
     }
 
     .brands-container {
