@@ -172,7 +172,33 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-// Safari/Chrome Back Button Cache Fix
+// =====================================================
+// 7. Safari/Chrome Back Button Cache
+// =====================================================
 window.addEventListener('pageshow', (event) => {
-    if (event.persisted) document.body.classList.remove('fade-out');
+    // If the page is restored from the browser cache
+    if (event.persisted) {
+        // 1. Remove the transition fade
+        document.body.classList.remove('fade-out');
+
+        // 2. Force the currently visible video to resume playing
+        const isPortfolioEntered = sessionStorage.getItem('hartoIntroPlayed') === 'true';
+        if (isPortfolioEntered) {
+            // Find which thumbnail is currently active
+            const activeThumb = document.querySelector('.filmstrip__item.active');
+            if (activeThumb) {
+                const targetId = activeThumb.getAttribute('data-target');
+                const activeVideo = document.querySelector(`#${targetId} video`);
+                if (activeVideo) {
+                    activeVideo.play().catch(() => { });
+                }
+            } else {
+                // Fallback to the first video if no thumbnail is active
+                const firstVideo = document.querySelector('#vid1 video');
+                if (firstVideo) {
+                    firstVideo.play().catch(() => { });
+                }
+            }
+        }
+    }
 });
